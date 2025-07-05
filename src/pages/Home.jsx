@@ -9,8 +9,11 @@ import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { fetchBookmarks } from "@/store/thunks/bookmarkThunks";
 import { fetchFavourites, fetchSubscriptions } from "@/store/thunks/userThunks";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+
+    const { isAuthenticated } = useSelector((state) => state.user);
 
     // bookmarks data
     const sampleBookmarks = [
@@ -152,12 +155,15 @@ const Home = () => {
       dispatch(fetchBookmarks()).then((result) => {
         console.log("Fetched bookmarks result:", result);
       });
-      dispatch(fetchSubscriptions()).then((result) => {
-        console.log("Fetched subscriptions result:", result);
-      });
-      dispatch(fetchFavourites()).then((result) => {
-        console.log("Fetched favourites result:", result);
-      });
+
+      if (isAuthenticated) {
+        dispatch(fetchSubscriptions()).then((result) => {
+          console.log("Fetched subscriptions result:", result);
+        });
+        dispatch(fetchFavourites()).then((result) => {
+          console.log("Fetched favourites result:", result);
+        });
+      }
     }, [dispatch]);
 
     return (
