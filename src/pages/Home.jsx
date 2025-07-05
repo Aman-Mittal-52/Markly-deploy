@@ -8,6 +8,7 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { fetchBookmarks } from "@/store/thunks/bookmarkThunks";
+import { fetchFavourites, fetchSubscriptions } from "@/store/thunks/userThunks";
 
 const Home = () => {
 
@@ -150,6 +151,12 @@ const Home = () => {
     useEffect(() => {
       dispatch(fetchBookmarks()).then((result) => {
         console.log("Fetched bookmarks result:", result);
+      });
+      dispatch(fetchSubscriptions()).then((result) => {
+        console.log("Fetched subscriptions result:", result);
+      });
+      dispatch(fetchFavourites()).then((result) => {
+        console.log("Fetched favourites result:", result);
       });
     }, [dispatch]);
 

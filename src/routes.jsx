@@ -5,12 +5,13 @@ import NotFound from "@/pages/NotFound";
 import Settings from "@/pages/Settings";
 import UserProfile from "@/pages/UserProfile";
 import BookmarkDetail from "@/pages/BookmarkDetail";
+import Subscriptions from "@/pages/Subscriptions";
 
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function PrivateRoute({ children }) {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   if (!isAuthenticated) {
     return <Navigate to="/auth/login" />;
@@ -23,15 +24,20 @@ const RoutesList = () => (
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/bookmark/:id" element={<BookmarkDetail />} />
-    <Route path="/settings" element={<Settings />} />
-    
+
+    <Route path="/subscriptions" element={
+      <PrivateRoute>
+        <Subscriptions />
+      </PrivateRoute>
+    } />
+
     <Route path="/account" element={
       <PrivateRoute>
         <UserProfile />
       </PrivateRoute>
     } />
 
-<Route path="/test" element={<h1 className="text-7xl">test</h1>} />
+    <Route path="/settings" element={<Settings />} />
 
     <Route path="*" element={<NotFound />} />
   </Routes>

@@ -3,6 +3,8 @@ import {
     loginUser,
     registerUser,
     logoutUser,
+    fetchSubscriptions,
+    fetchFavourites,
 } from '../thunks/userThunks';
 
 const initialState = {
@@ -11,6 +13,8 @@ const initialState = {
   collections: JSON.parse(localStorage.getItem('Collections')) || [],
   loading: false,
   error: null,
+  subscriptions: JSON.parse(localStorage.getItem('subscriptions')) || [],
+  favourites: JSON.parse(localStorage.getItem('favourites')) || [],
 };
 
 const userSlice = createSlice({
@@ -76,6 +80,34 @@ const userSlice = createSlice({
       .addCase(logoutUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Logout failed';
+      })
+      // Fetch Subscriptions
+      .addCase(fetchSubscriptions.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSubscriptions.fulfilled, (state, action) => {
+        state.loading = false;
+        state.subscriptions = action.payload.subscriptions || action.payload || [];
+        state.error = null;
+      })
+      .addCase(fetchSubscriptions.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to fetch subscriptions';
+      })
+      // Fetch Favourites
+      .addCase(fetchFavourites.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchFavourites.fulfilled, (state, action) => {
+        state.loading = false;
+        state.favourites = action.payload.favourites || action.payload || [];
+        state.error = null;
+      })
+      .addCase(fetchFavourites.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to fetch favourites';
       });
   },
 });

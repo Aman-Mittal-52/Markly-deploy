@@ -13,8 +13,10 @@ import { Badge } from '@/components/ui/badge'
 
 export function LibrarySection() {
   const navigate = useNavigate()
-  const { isAuthenticated, collections } = useSelector((state) => state.user)
+  const { isAuthenticated, collections, favourites } = useSelector((state) => state.user)
 
+
+ 
   // Library section items
   const libraryItems = [
     {
@@ -27,7 +29,7 @@ export function LibrarySection() {
       label: 'Favorites',
       icon: Heart,
       url: '/favorites',
-      badge: 45,
+      badge: isAuthenticated ? favourites?.bookmarks?.length : null,
     },
     {
       label: 'Collections',

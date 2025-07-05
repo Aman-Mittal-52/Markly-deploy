@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useGoogleScript } from "@/hooks/useGoogleScript";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +34,29 @@ export function LoginForm({ className, onOpenSignup, onOpenChange }) {
         }
     }, [isAuthenticated]);
 
+
+
+    const googleDivRef = useRef(null);
+    useGoogleScript();
+
+    useEffect(() => {
+        if (googleDivRef.current && window.google) {
+            window.google.accounts.id.initialize({
+                client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+                callback: (response) => {
+                    console.log("Google JWT:", response.credential);
+                    // dispatch(loginUserWithGoogle(response.credential)) — optional
+                },
+            });
+
+            window.google.accounts.id.renderButton(googleDivRef.current, {
+                theme: "outline",
+                size: "large",
+                type: "standard",
+                logo_alignment: "left",
+            });
+        }
+    }, [googleDivRef]);
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             <Card className='border-none'>
@@ -55,7 +79,7 @@ export function LoginForm({ className, onOpenSignup, onOpenChange }) {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                        <div className="grid gap-3">me 
+                        <div className="grid gap-3">me
                             <div className="flex items-center">
                                 <Label htmlFor="login-password">Password</Label>
                             </div>
@@ -82,10 +106,7 @@ export function LoginForm({ className, onOpenSignup, onOpenChange }) {
                                 Or continue with
                             </span>
                         </div>
-                        <Button variant="outline" className="w-full">
-                            <img src="https://google.com/favicon.ico" alt="" />
-                            Google
-                        </Button>
+                        <div className="w-full flex justify-center" ref={googleDivRef}></div>
                     </div>
                 </CardContent>
             </Card>

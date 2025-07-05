@@ -39,7 +39,7 @@ import {
   User,
 } from "lucide-react";
 import { LoginForm } from "@/components/auth/LoginForm";
-import { SignupForm } from "@/components/auth/SignUpModal";
+
 import { useDispatch } from "react-redux";
 import { logoutUser } from "@/store/thunks/userThunks";
 
@@ -47,7 +47,7 @@ export function MarklySidebarFooter() {
   const { isMobile } = useSidebar();
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
-  const [signupDialogOpen, setSignupDialogOpen] = useState(false);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -55,7 +55,6 @@ export function MarklySidebarFooter() {
     (state) => state.user
   );
 
-  console.log(isAuthenticated, currentUser);
   const user = currentUser || {
     name: "Aman Mittal",
     email: "aman.mittal@gmail.com",
@@ -163,33 +162,14 @@ export function MarklySidebarFooter() {
             <DialogTitle/>
           </DialogHeader>
           <LoginForm
-            onOpenSignup={() => {
-              setLoginDialogOpen(false);
-              setSignupDialogOpen(true);
-            }}
+            
             onOpenChange={setLoginDialogOpen}
           />
           <DialogDescription/>
         </DialogContent>
       </Dialog>
 
-      {/* Signup Modal */}
-      <Dialog open={signupDialogOpen} onOpenChange={setSignupDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle/>
-          </DialogHeader>
-          <SignupForm
-            onOpenLogin={() => {
-              setSignupDialogOpen(false);
-              setLoginDialogOpen(true);
-            }}
-            onOpenChange={setSignupDialogOpen}
-          />
-          <DialogDescription/>
-        </DialogContent>
-      </Dialog>
-
+      
       {/* Logout Confirmation Dialog */}
       <Dialog open={logoutDialogOpen} onOpenChange={setLogoutDialogOpen}>
         <DialogContent>
@@ -208,7 +188,6 @@ export function MarklySidebarFooter() {
               onClick={() => {
                 setLogoutDialogOpen(false);
                 dispatch(logoutUser());
-                toast.success("Logged out successfully!");
               }}
             >
               Log out
