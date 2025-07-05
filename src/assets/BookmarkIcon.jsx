@@ -1,0 +1,19 @@
+export const BookmarkIcon = () => (
+        <svg
+    viewBox="0 0 64 64"
+    xmlns="http://www.w3.org/2000/svg"
+    className="bookmark-logo"
+  >
+    <path
+      d="M16 4h32a4 4 0 014 4v48a1 1 0 01-1.6.8L32 44l-18.4 12.8A1 1 0 0112 56V8a4 4 0 014-4z"
+      fill="url(#gradient)"
+    />
+    <defs>
+      <linearGradient id="gradient" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stopColor="#005eff" />
+        <stop offset="100%" stopColor="#2bd2ff" />
+      </linearGradient>
+    </defs>
+  </svg>
+  );
+  

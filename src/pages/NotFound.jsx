@@ -9,9 +9,6 @@ const NotFound = () => {
             <p className="text-lg">
                 The link you followed may be broken, or the page may have been removed.  
             </p>
-            <div className="text-sm text-gray-500">
-                Vercel Routing Working Fine
-            </div>
             <Button variant="link" asChild>
                 <Link to="/">Go back to markly.</Link>
             </Button>

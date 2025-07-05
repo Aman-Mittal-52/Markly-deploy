@@ -6,8 +6,9 @@ import {
 } from '../thunks/userThunks';
 
 const initialState = {
-  user: null,
-  isAuthenticated: false,
+  user: JSON.parse(localStorage.getItem('authUser')) || null,
+  isAuthenticated: localStorage.getItem('authToken') ? true : false,
+  collections: JSON.parse(localStorage.getItem('Collections')) || [],
   loading: false,
   error: null,
 };
@@ -37,7 +38,8 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user || action.payload;
+        state.user = action.payload.data.users[0] || action.payload;
+        state.collections = action.payload.data.collections || [];
         state.isAuthenticated = true;
         state.error = null;
       })
