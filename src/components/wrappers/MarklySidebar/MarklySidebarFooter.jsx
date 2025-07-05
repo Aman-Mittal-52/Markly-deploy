@@ -43,10 +43,13 @@ import { LoginForm } from "@/components/auth/LoginForm";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "@/store/thunks/userThunks";
 
+import { SignupForm } from "@/components/auth/SignupModal";
+
 export function MarklySidebarFooter() {
   const { isMobile } = useSidebar();
   const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
   const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+  const [signupDialogOpen, setSignupDialogOpen] = useState(false);
   
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -162,14 +165,33 @@ export function MarklySidebarFooter() {
             <DialogTitle/>
           </DialogHeader>
           <LoginForm
-            
             onOpenChange={setLoginDialogOpen}
+            onOpenSignup={() => {
+              setLoginDialogOpen(false);
+              setSignupDialogOpen(true);
+            }}
           />
           <DialogDescription/>
         </DialogContent>
       </Dialog>
 
-      
+      {/* Signup Modal Dialog */}
+      <Dialog open={signupDialogOpen} onOpenChange={setSignupDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle/>
+          </DialogHeader>
+          <SignupForm
+            onOpenChange={setSignupDialogOpen}
+            onOpenLogin={() => {
+              setSignupDialogOpen(false);
+              setLoginDialogOpen(true);
+            }}
+          />
+          <DialogDescription/>
+        </DialogContent>
+      </Dialog>
+
       {/* Logout Confirmation Dialog */}
       <Dialog open={logoutDialogOpen} onOpenChange={setLogoutDialogOpen}>
         <DialogContent>

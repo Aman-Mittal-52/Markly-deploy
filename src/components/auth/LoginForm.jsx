@@ -79,7 +79,7 @@ export function LoginForm({ className, onOpenSignup, onOpenChange }) {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                        <div className="grid gap-3">me
+                        <div className="grid gap-3">
                             <div className="flex items-center">
                                 <Label htmlFor="login-password">Password</Label>
                             </div>
