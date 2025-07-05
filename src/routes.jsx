@@ -31,6 +31,8 @@ const RoutesList = () => (
       </PrivateRoute>
     } />
 
+<Route path="/test" element={<h1 className="text-7xl">test</h1>} />
+
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
